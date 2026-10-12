@@ -260,12 +260,13 @@ footer .soc{display:flex;gap:22px;justify-content:center;margin-bottom:14px;font
 
 <script>
 const $=(s,c=document)=>[...c.querySelectorAll(s)];
-addEventListener('load',()=>setTimeout(()=>$('#pre')[0].classList.add('out'),1900));
+let started=0;function go(){if(started++)return;$('#pre')[0].classList.add('out');setTimeout(()=>$('.rv').forEach(e=>io.observe(e)),450)}
+addEventListener('load',()=>setTimeout(go,1900));setTimeout(go,5000);
 // reveal + counters
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');e.target.closest('.it')?.classList.add('in');io.unobserve(e.target);
  const n=e.target.querySelector('[data-n]');if(n){const T=+n.dataset.n,t0=performance.now();(function f(t){const k=Math.min((t-t0)/1600,1);n.textContent=Math.round(T*(1-Math.pow(1-k,3))).toLocaleString('en')+(k==1&&T>50?'+':'');if(k<1)requestAnimationFrame(f)})(t0)}
 }),{threshold:.2});
-$('.rv').forEach(e=>io.observe(e));
+
 // scroll fx
 const nav=$('#nav')[0],fl=$('#fl')[0],tl=$('#tl')[0],fill=$('#fill')[0],pars=$('.par');
 function sc(){const y=scrollY,h=innerHeight;nav.classList.toggle('s',y>40);fl.classList.toggle('v',y>h*.8);
